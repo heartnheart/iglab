@@ -51,6 +51,12 @@ Show issues assigned to a user at a point in time:
 python -m iglab_cli --db .\cache.sqlite query assignee-at --user zhangli --time 2026-06-13T10:00:00+08:00
 ```
 
+Return dashboard issue JSON:
+
+```powershell
+python -m iglab_cli --db .\cache.sqlite query dashboard --state opened
+```
+
 ## Emacs
 
 Load `iglab.el`, then use:
@@ -68,6 +74,20 @@ Interactive commands:
 - `M-x iglab-cancel` cancels a running sync
 - `M-x iglab-render-org`
 - `M-x iglab-open-org`
+- `M-x iglab-dashboard`
+
+The dashboard is a read-only `special-mode` view. It defaults to opened
+issues, reads issue metadata through the Python CLI, and reads the first
+non-empty paragraph from each Org issue body as the local note summary. It does
+not render or modify the Org file automatically.
+
+Dashboard keys:
+
+- `RET` jumps to the issue in `iglab-org-file`
+- `g` refreshes the dashboard
+- `L` shows the full GitLab label list
+- `b` opens the GitLab issue URL
+- `q` quits the dashboard window
 
 ## Status
 
@@ -80,6 +100,7 @@ Implemented:
 - Issue body preservation during Org regeneration.
 - Assignee system note parser for the observed English GitLab text.
 - Emacs wrapper commands.
+- Read-only Emacs dashboard for issue browsing.
 
 Pending:
 

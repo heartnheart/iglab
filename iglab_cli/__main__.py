@@ -7,6 +7,7 @@ from pathlib import Path
 
 from .assignee import assignee_at, parse_assignee_events_for_issue
 from .config import Config, load_config
+from .dashboard import dashboard_issues
 from .db import connect, initialize_database
 from .gitlab import GitLabClient
 from .org_render import render_org
@@ -46,6 +47,10 @@ def build_parser() -> argparse.ArgumentParser:
     at.add_argument("--user", required=True, help="GitLab username.")
     at.add_argument("--time", required=True, help="ISO timestamp.")
     at.set_defaults(func=cmd_assignee_at)
+
+    dashboard = query_sub.add_parser("dashboard", help="Return dashboard issue JSON.")
+    dashboard.add_argument("--state", choices=("opened", "closed", "all"), default="all")
+    dashboard.set_defaults(func=cmd_dashboard)
 
     return parser
 
@@ -115,6 +120,15 @@ def cmd_assignee_at(args: argparse.Namespace) -> int:
     with connect(config.db_path) as conn:
         matches = assignee_at(conn, args.user, args.time)
     print(json.dumps([match.to_dict() for match in matches], ensure_ascii=False, indent=2))
+    return 0
+
+
+def cmd_dashboard(args: argparse.Namespace) -> int:
+    config = resolve_config(args)
+    with connect(config.db_path) as conn:
+        initialize_database(conn)
+        issues = dashboard_issues(conn, state=args.state)
+    print(json.dumps(issues, ensure_ascii=False, indent=2))
     return 0
 
 

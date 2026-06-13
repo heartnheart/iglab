@@ -12,6 +12,7 @@
 ;;        M-x iglab-local-test-init-db
 ;;        M-x iglab-local-test-sync-active
 ;;        M-x iglab-local-test-render-org
+;;        M-x iglab-local-test-dashboard
 ;;
 ;; `iglab-local-test-render-org' renders whatever is already in SQLite. Run
 ;; `iglab-local-test-sync-active' first if you expect real GitLab issues.
@@ -66,6 +67,11 @@
   "Run active-scope sync through the Emacs wrapper."
   (interactive)
   (iglab-sync "active"))
+
+(defun iglab-local-test-dashboard ()
+  "Open the local smoke-test dashboard."
+  (interactive)
+  (iglab-dashboard))
 
 (defun iglab-local-test-show-config ()
   "Show the local smoke-test configuration."
