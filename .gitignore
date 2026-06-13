@@ -1,0 +1,5 @@
+*.sqlite
+__pycache__/
+*.pyc
+gitlab-issues.org
+local-test-gitlab-issues.org
