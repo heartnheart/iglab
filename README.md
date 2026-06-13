@@ -82,11 +82,43 @@ issues, reads issue metadata through the Python CLI, and reads the first
 non-empty paragraph from each Org issue body as the local note summary. It does
 not render or modify the Org file automatically.
 
+Dashboard columns are controlled by `iglab-dashboard-columns`. Each entry is:
+
+```elisp
+(KEY TITLE WIDTH VISIBLE)
+```
+
+`WIDTH` is the usable text width for that column. Spacing between columns is
+controlled by `iglab-dashboard-column-gap`.
+
+For example:
+
+```elisp
+(setq iglab-dashboard-columns
+      '((state "State" 8 t)
+        (iid "IID" 8 t)
+        (title "Title" 50 t)
+        (assignee "Assignee" 16 t)
+        (labels "Labels" 40 t)
+        (note "Note" 50 t)
+        (updated "Updated" 22 nil)
+        (project "Project" 36 t)))
+```
+
 Dashboard keys:
 
 - `RET` jumps to the issue in `iglab-org-file`
 - `g` refreshes the dashboard
+- `o` sorts by a selected column; choosing the same column toggles direction
+- `/` filters by text across title, note, project, assignee, and labels
+- `s` filters by state
+- `a` filters by assignee
+- `p` filters by project
+- `l` filters by label
+- `C` clears filters and restores the default opened-state view
 - `L` shows the full GitLab label list
+- `T` toggles a column
+- `W` changes a column width
 - `b` opens the GitLab issue URL
 - `q` quits the dashboard window
 

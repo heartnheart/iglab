@@ -52,6 +52,20 @@
 (setq iglab-root-groups iglab-local-test-root-groups)
 (setq iglab-project-paths iglab-local-test-project-paths)
 
+;; Dashboard column example. Each entry is (KEY TITLE WIDTH VISIBLE).
+;; WIDTH is the usable text width for the column. Column spacing is controlled
+;; by `iglab-dashboard-column-gap'. Set VISIBLE to nil to hide a column.
+(setq iglab-dashboard-columns
+      '((state "State" 6 t)
+        (iid "IID" 8 nil)
+        (title "Title" 80 t)
+        (assignee "Assignee" 16 t)
+        (labels "Labels" 30 t)
+        (updated "Updated" 22 nil)
+        (project "Project" 36 t)
+        (note "Note" 52 t)
+        ))
+
 ;;; Smoke-test helpers
 
 (defun iglab-local-test-init-db ()
