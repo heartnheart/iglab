@@ -73,6 +73,15 @@ class GitLabClient:
                 if project_id not in seen:
                     seen.add(project_id)
                     yield project
+        for project_path in self.config.project_paths:
+            quoted_project = urllib.parse.quote(project_path, safe="")
+            project, _headers = self._get_json(f"/api/v4/projects/{quoted_project}", {})
+            if not isinstance(project, dict):
+                raise ValueError(f"Expected project response for {project_path}")
+            project_id = int(project["id"])
+            if project_id not in seen:
+                seen.add(project_id)
+                yield project
 
     def iter_active_issues(self, project_id: int) -> Iterable[dict[str, Any]]:
         seen: set[int] = set()

@@ -23,6 +23,7 @@
 (setq iglab-local-test-gitlab-host "https://git.iris-view.com")
 (setq iglab-local-test-gitlab-token "glpat-lHqTbfCS1-bGN96j3NQqFm86MQp1OjFkCA.01.0y0oxek4e")
 (setq iglab-local-test-root-groups '("project"))
+(setq iglab-local-test-project-paths '("sdk/issue"))
 
 ;;; Project-local paths
 
@@ -49,6 +50,7 @@
 (setq iglab-gitlab-host iglab-local-test-gitlab-host)
 (setq iglab-gitlab-token iglab-local-test-gitlab-token)
 (setq iglab-root-groups iglab-local-test-root-groups)
+(setq iglab-project-paths iglab-local-test-project-paths)
 
 ;;; Smoke-test helpers
 
@@ -76,9 +78,10 @@
 (defun iglab-local-test-show-config ()
   "Show the local smoke-test configuration."
   (interactive)
-  (message "host=%s groups=%S db=%s org=%s"
+  (message "host=%s groups=%S projects=%S db=%s org=%s"
            iglab-gitlab-host
            iglab-root-groups
+           iglab-project-paths
            iglab-database-file
            iglab-org-file))
 

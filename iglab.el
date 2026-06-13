@@ -55,6 +55,11 @@
   :type '(repeat string)
   :group 'iglab)
 
+(defcustom iglab-project-paths nil
+  "Specific GitLab project paths to sync in addition to `iglab-root-groups'."
+  :type '(repeat string)
+  :group 'iglab)
+
 (defvar iglab--running-process nil
   "Current asynchronous iglab process, if any.")
 
@@ -180,7 +185,9 @@
    (when iglab-gitlab-token
      (list (concat "IGLAB_GITLAB_TOKEN=" iglab-gitlab-token)))
    (when iglab-root-groups
-     (list (concat "IGLAB_ROOT_GROUPS=" (mapconcat #'identity iglab-root-groups ";"))))))
+     (list (concat "IGLAB_ROOT_GROUPS=" (mapconcat #'identity iglab-root-groups ";"))))
+   (when iglab-project-paths
+     (list (concat "IGLAB_PROJECT_PATHS=" (mapconcat #'identity iglab-project-paths ";"))))))
 
 ;;;###autoload
 (defun iglab-init-db ()

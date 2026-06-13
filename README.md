@@ -65,6 +65,7 @@ Load `iglab.el`, then use:
 (setq iglab-gitlab-host "https://gitlab.internal")
 (setq iglab-gitlab-token "glpat-...")
 (setq iglab-root-groups '("project"))
+(setq iglab-project-paths '("sdk/issue"))
 ```
 
 Interactive commands:
