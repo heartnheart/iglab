@@ -61,7 +61,7 @@ def render_org(conn: sqlite3.Connection, existing_org: str | None = None) -> str
 
         todo = TODO_BY_STATE.get(row["state"], "UNKNOWN")
         custom_id = org_custom_id(project, row["iid"])
-        title = org_clean_heading(str(row["title"]))
+        title = org_clean_title(str(row["title"]))
         tags = org_tags(load_labels(row["labels_json"]))
         tag_suffix = f" {tags}" if tags else ""
         update_url = issue_update_url(conn, int(row["project_id"]), int(row["iid"]), row["web_url"])
@@ -169,6 +169,10 @@ def strip_blank_edges(lines: list[str]) -> list[str]:
 
 def org_clean_heading(value: str) -> str:
     return " ".join(value.replace("\r", " ").replace("\n", " ").split())
+
+
+def org_clean_title(value: str) -> str:
+    return org_clean_heading(value).replace("【", "[").replace("】", "]")
 
 
 def org_property_value(value: str) -> str:

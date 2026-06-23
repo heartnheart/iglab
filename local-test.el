@@ -23,7 +23,7 @@
 (setq iglab-local-test-gitlab-host "https://git.iris-view.com")
 (setq iglab-local-test-gitlab-token "glpat-lHqTbfCS1-bGN96j3NQqFm86MQp1OjFkCA.01.0y0oxek4e")
 (setq iglab-local-test-root-groups '("project"))
-(setq iglab-local-test-project-paths '("sdk/issue"))
+(setq iglab-local-test-project-paths '("sdk/issue" "ui/docs" "graphics/docs" "systems/docs"))
 
 ;;; Project-local paths
 
@@ -58,11 +58,11 @@
 (setq iglab-dashboard-columns
       '((state "State" 6 t)
         (iid "IID" 8 nil)
-        (title "Title" 80 t)
+        (title "Title" 30 t)
         (assignee "Assignee" 16 t)
         (labels "Labels" 30 t)
         (updated "Updated" 22 nil)
-        (project "Project" 36 t)
+        (project "Project" 30 t)
         (note "Note" 52 t)
         ))
 

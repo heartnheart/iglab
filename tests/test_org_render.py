@@ -58,6 +58,29 @@ class OrgRenderTest(unittest.TestCase):
         self.assertNotIn("- Updated:", org)
         self.assertNotIn(":LOCAL_NOTES:", org)
 
+    def test_render_normalizes_chinese_title_brackets(self) -> None:
+        upsert_issue(
+            self.conn,
+            1,
+            {
+                "iid": 340,
+                "title": "Bug 【login】",
+                "state": "opened",
+                "created_at": "2026-06-01T00:00:00Z",
+                "updated_at": "2026-06-07T00:00:00Z",
+                "closed_at": None,
+                "assignee": {"username": "zhangli"},
+                "labels": [],
+                "web_url": "https://gitlab.local/project/windows-bug/-/issues/340",
+            },
+            "2026-06-13T00:00:00Z",
+        )
+
+        org = render_org(self.conn)
+
+        self.assertIn("*** TODO #340 Bug [login]", org)
+        self.assertNotIn("【login】", org)
+
     def test_render_updated_url_property_to_latest_activity_note(self) -> None:
         upsert_issue(
             self.conn,

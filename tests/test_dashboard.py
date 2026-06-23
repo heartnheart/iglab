@@ -74,6 +74,15 @@ class DashboardTest(unittest.TestCase):
 
         self.assertEqual([issue["iid"] for issue in issues], [340])
 
+    def test_dashboard_normalizes_chinese_title_brackets(self) -> None:
+        issue = self.issue(340, "opened")
+        issue["title"] = "Bug 【login】"
+        upsert_issue(self.conn, 1, issue, "2026-06-13T00:00:00Z")
+
+        issues = dashboard_issues(self.conn, state="opened")
+
+        self.assertEqual(issues[0]["title"], "Bug [login]")
+
     def issue(self, iid: int, state: str) -> dict[str, object]:
         return {
             "iid": iid,

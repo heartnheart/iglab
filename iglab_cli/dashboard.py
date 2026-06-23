@@ -3,7 +3,7 @@ from __future__ import annotations
 import sqlite3
 from typing import Any
 
-from .org_render import TODO_BY_STATE, issue_update_url, load_labels, org_custom_id
+from .org_render import TODO_BY_STATE, issue_update_url, load_labels, org_clean_title, org_custom_id
 
 
 def dashboard_issues(conn: sqlite3.Connection, state: str | None = None) -> list[dict[str, Any]]:
@@ -50,7 +50,7 @@ def dashboard_issues(conn: sqlite3.Connection, state: str | None = None) -> list
                 "iid": iid,
                 "state": row["state"],
                 "todo": TODO_BY_STATE.get(row["state"], "UNKNOWN"),
-                "title": row["title"],
+                "title": org_clean_title(str(row["title"])),
                 "assignee": row["assignee_username"] or "",
                 "labels": load_labels(row["labels_json"]),
                 "updated_at": row["updated_at"] or "",
